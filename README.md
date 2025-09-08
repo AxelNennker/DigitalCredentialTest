@@ -11,7 +11,7 @@ Anyway... Maybe I create a repo for the backend part later, or not.
 
 ## What is missing?
 
-### carrier configuration
+### Carrier Configuration
 
 Currently there is no standard way for the carrier to tell Android which aggregator they are supporting or for the mobile OS to request this configuration data. 
 That is where AcquireConfiguration comes in.
