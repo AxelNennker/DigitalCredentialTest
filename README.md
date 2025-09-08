@@ -1,13 +1,16 @@
 # Digital Credentials Test
 
 This repository contains a simple Android app, currently compiling but not working, that was created by
-- Updating Android Studio to the latest version
 - Using Android Studio to create a demo app that contains a button to click. The one with the mail-envelope at the bottom right corner
 - Add the code from https://developer.android.com/identity/digital-credentials/phone-number-verification#make-credentialmanager and put it into the onclick handler of the mail-envelope button
 - Fill-in what is missing
 
 Everything is in the mobile app, which is NOT how the digital credentials request is intended to be created.
 Anyway... Maybe I create a repo for the backend part later, or not.
+
+# The Future
+
+When this working for one CAMARA API, then extend to more.
 
 ## What is missing?
 
@@ -71,6 +74,18 @@ sequenceDiagram
             credman->>credman: Create DigitalCredential
             credman->>browser: DigitalCredential
             browser->>web: DigitalCredential
+            web->>backend: use Digital Credentials
+            backend->>agg: send JWT Bearer Token requrest<br/>to get CAMARA access token
+            agg->>carrieraz: send JWT Bearer Token requrest<br/>to get CAMARA access token
+            carrieraz->>ecs: use temporary token to get operator token scope = CAMARA scopes
+            ecs->>carrieraz: opertor token
+            carrieraz->>carrier_az: create CAMARA access token
+            carrieraz->>agg: CAMARA access token
+            agg->>carrierapi: call CAMARA API e.g. Fill-In
+            carrierapi->>agg: CAMARA API reponse
+            agg->>backend: response
+            backend->>web: response
+            web->>User: Suceess message
         end
     end
 ```
