@@ -35,8 +35,10 @@ import de.telekom.digitalcredentials.dc_lib.Meta
 import de.telekom.digitalcredentials.dc_lib.OpenId4Vp
 import de.telekom.digitalcredentials.dc_lib.OpenId4VpRequest
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -58,6 +60,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -72,12 +75,9 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.fab.setOnClickListener { view ->
-            CoroutineScope(IO).launch {
-                getPhoneNumber(applicationContext)
+            GlobalScope.launch(Dispatchers.Main) { // launch coroutine in the main thread
+                getPhoneNumber(view.context)
             }
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
         }
     }
 
@@ -103,7 +103,6 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 }
-
 
 @OptIn(ExperimentalDigitalCredentialApi::class)
 private suspend fun MainActivity.getPhoneNumber(activityContext: Context) {
