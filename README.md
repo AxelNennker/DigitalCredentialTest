@@ -8,6 +8,80 @@ This repository contains a simple Android app, currently compiling but not worki
 Everything is in the mobile app, which is NOT how the digital credentials request is intended to be created.
 Anyway... Maybe I create a repo for the backend part later, or not.
 
+# Current Status
+
+The openid4vp request is created and the digital credentials API is called.
+
+There is no digital credential for the user at that "aggregator1".
+
+<img width="140" height="303" alt="image" src="https://github.com/user-attachments/assets/cd4c43a8-123e-4004-9e4e-a64c84c5bf27" />
+
+This is because the request is not authorized.
+
+This openid4vp request is not authorized.
+
+```json
+{
+  "requests": [
+    {
+      "protocol": "openid4vp-v1-unsigned",
+      "data": {
+        "response_type": "vp_token",
+        "response_mode": "dc_api",
+        "nonce": "HI4OTIwnGG5pAKNH3u5sedtGy3Am0m9b",
+        "dcql_query": {
+          "credentials": [
+            {
+              "format": "dc-authorization+sd-jwt",
+              "id": "aggregator1",
+              "meta": {
+                "vct_values": [
+                  "number-verification/device-phone-number/ts43"
+                ],
+                "credential_authorization_jwt": "eyJ4NWMiOlsiTUlJQ3BUQ0NBa3VnQXdJQkFnSVVDOWZOSnBkVU1RWWRCbDFuaDgrUml0UndNRDh3Q2dZSUtvWkl6ajBFQXdJd2VERUxNQWtHQTFVRUJoTUNWVk14RXpBUkJnTlZCQWdNQ2tOaGJHbG1iM0p1YVdFeEZqQVVCZ05WQkFjTURVMXZkVzUwWVdsdUlGWnBaWGN4R3pBWkJnTlZCQW9NRWtWNFlXMXdiR1VnUVdkbmNtVm5ZWFJ2Y2pFZk1CMEdBMVVFQXd3V1pYaGhiWEJzWlMxaFoyZHlaV2RoZEc5eUxtUmxkakFlRncweU5UQTFNVEV5TWpRd01EVmFGdzB6TlRBME1qa3lNalF3TURWYU1IZ3hDekFKQmdOVkJBWVRBbFZUTVJNd0VRWURWUVFJREFwRFlXeHBabTl5Ym1saE1SWXdGQVlEVlFRSERBMU5iM1Z1ZEdGcGJpQldhV1YzTVJzd0dRWURWUVFLREJKRmVHRnRjR3hsSUVGblozSmxaMkYwYjNJeEh6QWRCZ05WQkFNTUZtVjRZVzF3YkdVdFlXZG5jbVZuWVhSdmNpNWtaWFl3V1RBVEJnY3Foa2pPUFFJQkJnZ3Foa2pPUFFNQkJ3TkNBQVJRcW5LTGw5U2g4dFcwM0h5aVBnOVRUcGlyQVg2V2haKzlJSWhVWFJGcDlxRFM0eW5YeG1GbjMzWk5nMTlQR1VzRWpxNGwzam9Penh2cHhqWDRoL1JlbzRHeU1JR3ZNQjBHQTFVZERnUVdCQlFBV1I5czRrWFRjeHJPeTFLSE12UldTSkg5YmpBZkJnTlZIU01FR0RBV2dCUUFXUjlzNGtYVGN4ck95MUtITXZSV1NKSDliakFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQTRHQTFVZER3RUIvd1FFQXdJSGdEQXBCZ05WSFJJRUlqQWdoaDVvZEhSd2N6b3ZMMlY0WVcxd2JHVXRZV2RuY21WbllYUnZjaTVqYjIwd0lRWURWUjBSQkJvd0dJSVdaWGhoYlhCc1pTMWhaMmR5WldkaGRHOXlMbU52YlRBS0JnZ3Foa2pPUFFRREFnTklBREJGQWlCeERROUZiby9EUVRkbVNaS0NURUlHOXZma0JkWU5jVHcxUkkzT0k2L25KUUloQUw1NmU3YkVNOTlSTTFTUDAyd3gzbHhxZFZCWnhiVEhJcllCQkY3Y0FzYjMiXSwia2lkIjoiMTIzIiwidHlwIjoib2F1dGgtYXV0aHotcmVxK2p3dCIsImFsZyI6IkVTMjU2In0.eyJpc3MiOiJkY2FnZ3JlZ2F0b3IuZGV2IiwiZW5jcnlwdGVkX3Jlc3BvbnNlX2VuY192YWx1ZXNfc3VwcG9ydGVkIjpbIkExMjhHQ00iXSwiandrcyI6W3t9XSwiZXhwIjoxNzU3MzM5NzIwfQ.oL3kD-ILUgjz7KSBGD7ThlCdmTmo8fIR0sPOpVOZFpHoMVh_BzIqqdX4Kh3WPh3Vjp2824De07RIA_HIqAM-hA"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+because `credential_authorization_jwt` content is faked.
+
+Decoded the value is as follows:
+
+The JWS header contains the x5c from the Rider example:
+
+```json
+{
+  "x5c": [
+    "MIICpTCCAkugAwIBAgIUC9fNJpdUMQYdBl1nh8+RitRwMD8wCgYIKoZIzj0EAwIweDELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExFjAUBgNVBAcMDU1vdW50YWluIFZpZXcxGzAZBgNVBAoMEkV4YW1wbGUgQWdncmVnYXRvcjEfMB0GA1UEAwwWZXhhbXBsZS1hZ2dyZWdhdG9yLmRldjAeFw0yNTA1MTEyMjQwMDVaFw0zNTA0MjkyMjQwMDVaMHgxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMRYwFAYDVQQHDA1Nb3VudGFpbiBWaWV3MRswGQYDVQQKDBJFeGFtcGxlIEFnZ3JlZ2F0b3IxHzAdBgNVBAMMFmV4YW1wbGUtYWdncmVnYXRvci5kZXYwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARQqnKLl9Sh8tW03HyiPg9TTpirAX6WhZ+9IIhUXRFp9qDS4ynXxmFn33ZNg19PGUsEjq4l3joOzxvpxjX4h/Reo4GyMIGvMB0GA1UdDgQWBBQAWR9s4kXTcxrOy1KHMvRWSJH9bjAfBgNVHSMEGDAWgBQAWR9s4kXTcxrOy1KHMvRWSJH9bjAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIHgDApBgNVHRIEIjAghh5odHRwczovL2V4YW1wbGUtYWdncmVnYXRvci5jb20wIQYDVR0RBBowGIIWZXhhbXBsZS1hZ2dyZWdhdG9yLmNvbTAKBggqhkjOPQQDAgNIADBFAiBxDQ9Fbo/DQTdmSZKCTEIG9vfkBdYNcTw1RI3OI6/nJQIhAL56e7bEM99RM1SP02wx3lxqdVBZxbTHIrYBBF7cAsb3"
+  ],
+  "kid": "123",
+  "typ": "oauth-authz-req+jwt",
+  "alg": "ES256"
+}
+```
+
+The JWS payload is also bogus:
+
+```json
+{
+  "iss": "dcaggregator.dev",
+  "encrypted_response_enc_values_supported": [
+    "A128GCM"
+  ],
+  "jwks": [
+    {}
+  ],
+  "exp": 1757339720
+}
+```
+
+The value for `credential_authorization_jwt` should be created by the `backend`. There must be a contract between the `backend` and the `aggregator` which has a contract with the carrier and *somehow* the aggregator's public key or the aggrattor's certificates are known to Android - maybe be there is a AcquireConfiguration happening?
+
 # The Future
 
 When this working for one CAMARA API, then extend to more.
