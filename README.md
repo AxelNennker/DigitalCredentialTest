@@ -22,23 +22,30 @@ a configuration for the "id" in the request. If not, the TS.43-clients sends an 
 sequenceDiagram
     autonumber
     actor User
-    participant web as 3rd Party Web
     participant browser as Mobile Browser
     participant credman as Credential Manager
     participant ts43client as TS.43 Client
+    participant web as 3rd Party Web
     participant backend as 3rd Party Backend
+    participant agg as Aggregator
     participant ecs as Entitlement Server
-    web->>browser: Digital Credentials Request
+    User->>browser: click button<br/>e.g. "Get user data from carrier"<br/>triggering CAMARA Fill-In API usage
+    browser->>web: user clicked button
+    web->>backend: create Digital Credentials Request
+    backend->>agg: Request DCQL parameters from aggregator
+    agg->>backend: DCQL parameters
+    backend->>web: DigitalCredentials Request
+    web->>browser: use Digital Credentials Request
     browser->> credman: getCredential
     credman->>credman: lookup clientId
     opt if configuration for clientId does not exist
         credman->>ts43client: AcquireConfifguration
-        ts43client->>ecs: AcquireConfifguration appId=OpenGateway
+        ts43client->>ecs: AcquireConfifguration appId=ap_ogw
         ecs->>ts43client: return OpenGateway configuration
     end
-    alt if configuration for clientId does not exist
+    alt if configuration for aggregator does not exist
         credman->>browser: error
-    else if configuration for clientId does
+    else if configuration for aggregator does exist
         credman->>credman: validate request for client configuration 
         credman->>User: ask permission
         alt if permission not granted
