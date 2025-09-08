@@ -162,6 +162,7 @@ Example openid4vp request used at [https://digital-credentials.dev/rider](https:
 - [TS.43 v12.0 Service Entitlement Configuration](https://www.gsma.com/get-involved/working-groups/gsma_resources/ts-43-v12-0-service-entitlement-configuration/)
 - [Sign in your user with Credential Manager](https://developer.android.com/identity/sign-in/credential-manager)
 - [Verify phone numbers with digital credentials](https://developer.android.com/identity/digital-credentials/phone-number-verification)
+    - [Alpha release androidx.credentials](https://developer.android.com/jetpack/androidx/releases/credentials#version_16_2) 
 - [OpenID for Verifiable Presentations 1.0](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
 - Linux Foundation [CAMARA Project](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/overview?mode=global)
 - GSMA [OpenGateway](https://www.gsma.com/solutions-and-impact/gsma-open-gateway/)
