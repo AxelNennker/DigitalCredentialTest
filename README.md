@@ -11,10 +11,24 @@ Anyway... Maybe I create a repo for the backend part later, or not.
 
 ## What is missing?
 
+### carrier configuration
+
 Currently there is no standard way for the carrier to tell Android which aggregator they are supporting or for the mobile OS to request this configuration data. 
 That is where AcquireConfiguration comes in.
 The idea is that after the browser or the mobile app forwarded the openid4vp request to the operating system's TS.43-client, the TS.43-client checks whether it has 
 a configuration for the "id" in the request. If not, the TS.43-clients sends an AcquireConfiguration request for app="ap_ogw" to the Entitlement Server, which responds with a configuration that contains all the data needed CredentialManager Provider needs to validate that this requestor is supported by the carrier.
+
+### TS.43 Client
+
+The AOSP code is public and can be used to build your own TS.43 client
+https://cs.android.com/android/platform/superproject/main/+/main:frameworks/libs/service_entitlement/
+
+The TS.43 Client needs to be privileged, which means you need a rooted phone to give your TS.43 client those privileges.
+
+### CredentialManager Provider
+
+A CarrierCredentialManager Provider would be handy.
+
 
 # Sequence Diagram
 
@@ -62,6 +76,8 @@ sequenceDiagram
 ```
 
 ## Digital Credentials Request
+
+From the onclick handler code I worked bottom up to create content for missing variables taking inspiration from the [sample request](https://github.com/AxelNennker/DigitalCredentialTest/blob/master/README.md#digital-credentials-dev).
 
 ## AcquireConfiguration
 
