@@ -1,5 +1,21 @@
 # Digital Credentials Test
 
+This repository contains a simple Android app, currently compiling but not working, that was created by
+- Updating Android Studio to the latest version
+- Using Android Studio to create a demo app that contains a button to click. The one with the mail-envelope at the bottom right corner
+- Add the code from https://developer.android.com/identity/digital-credentials/phone-number-verification#make-credentialmanager and put it into the onclick handler of the mail-envelope button
+- Fill-in what is missing
+
+Everything is in the mobile app, which is NOT how the digital credentials request is intended to be created.
+Anyway... Maybe I create a repo for the backend part later, or not.
+
+## What is missing?
+
+Currently there is no standard way for the carrier to tell Android which aggregator they are supporting or for the mobile OS to request this configuration data. 
+That is where AcquireConfiguration comes in.
+The idea is that after the browser or the mobile app forwarded the openid4vp request to the operating system's TS.43-client, the TS.43-client checks whether it has 
+a configuration for the "id" in the request. If not, the TS.43-clients sends an AcquireConfiguration request for app="ap_ogw" to the Entitlement Server, which responds with a configuration that contains all the data needed CredentialManager Provider needs to validate that this requestor is supported by the carrier.
+
 # Sequence Diagram
 
 ```mermaid
